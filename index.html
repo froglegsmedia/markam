@@ -7,20 +7,27 @@
 <meta name="description" content="Mark A.M. — All Roads End Here, feat. Rowdy Hop. Out now on Rowdy Hop Records.">
 <style>
   :root{
-    --knicks-blue:#006BB6;
-    --knicks-blue-dark:#00558f;
-    --knicks-orange:#F58426;
-    --knicks-orange-light:#ff9d47;
-    --black:#0a0a0c;
-    --white:#f5f6f8;
+    --blue:#006BB6;
+    --blue-dark:#003f6b;
+    --orange:#F58426;
+    --orange-dark:#c9660f;
+    --cream:#F4EEDD;
+    --black:#0e0e0e;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   html{scroll-behavior:smooth;}
   body{
-    background:var(--black);
-    color:var(--white);
-    font-family:'Helvetica Neue', Arial, sans-serif;
+    background:var(--cream);
+    color:var(--black);
+    font-family:'Arial Black','Helvetica Neue',Arial,sans-serif;
     overflow-x:hidden;
+  }
+
+  /* halftone dot texture, reused everywhere */
+  .halftone{
+    background-image:radial-gradient(var(--black) 1.4px, transparent 1.4px);
+    background-size:10px 10px;
+    opacity:0.14;
   }
 
   /* ===== HERO ===== */
@@ -32,170 +39,177 @@
     align-items:center;
     justify-content:center;
     text-align:center;
-    padding:40px 20px;
-    background:
-      radial-gradient(circle at 20% 20%, rgba(0,107,182,0.55), transparent 55%),
-      radial-gradient(circle at 80% 75%, rgba(245,132,38,0.45), transparent 55%),
-      linear-gradient(160deg, #050506 0%, #0a0f16 45%, #04070a 100%);
+    padding:60px 20px;
+    background:var(--orange);
+    border-bottom:10px solid var(--black);
     overflow:hidden;
   }
-  .hero::before{
-    content:"";
+  .hero .halftone{position:absolute; inset:0;}
+
+  /* court line art */
+  .court-svg{
     position:absolute;
     inset:0;
-    background-image:
-      repeating-linear-gradient(115deg, rgba(255,255,255,0.035) 0px, rgba(255,255,255,0.035) 1px, transparent 1px, transparent 90px);
-    pointer-events:none;
+    width:100%;
+    height:100%;
+    z-index:1;
   }
-  .court-arc{
-    position:absolute;
-    width:1400px;
-    height:1400px;
-    border:2px solid rgba(0,107,182,0.25);
-    border-radius:50%;
-    top:-700px;
-    left:50%;
-    transform:translateX(-50%);
-    pointer-events:none;
-  }
-  .court-arc.inner{
-    width:900px;
-    height:900px;
-    top:-450px;
-    border-color:rgba(245,132,38,0.18);
-  }
+
   .hero-content{
     position:relative;
-    z-index:2;
-    max-width:900px;
+    z-index:3;
+    max-width:920px;
   }
   .kicker{
+    display:inline-block;
     font-size:13px;
-    letter-spacing:6px;
+    letter-spacing:4px;
     text-transform:uppercase;
-    color:var(--knicks-orange-light);
-    font-weight:700;
-    margin-bottom:22px;
+    color:var(--cream);
+    background:var(--black);
+    font-weight:900;
+    padding:8px 20px;
+    margin-bottom:26px;
+    transform:rotate(-2deg);
+    box-shadow:5px 5px 0 var(--blue);
   }
   .artist-name{
-    font-size:clamp(48px, 11vw, 128px);
+    font-size:clamp(52px, 13vw, 148px);
     font-weight:900;
     letter-spacing:-2px;
-    line-height:0.95;
+    line-height:0.88;
     text-transform:uppercase;
-    background:linear-gradient(100deg, var(--white) 30%, var(--knicks-orange-light) 65%, var(--knicks-blue) 95%);
-    -webkit-background-clip:text;
-    background-clip:text;
-    -webkit-text-fill-color:transparent;
-    margin-bottom:8px;
+    color:var(--cream);
+    -webkit-text-stroke:4px var(--black);
+    text-stroke:4px var(--black);
+    text-shadow:
+      6px 6px 0 var(--black),
+      6px 6px 0 var(--blue);
+    margin-bottom:6px;
+    transform:rotate(-1deg);
   }
   .artist-sub{
-    font-size:15px;
+    display:inline-block;
+    font-size:14px;
     letter-spacing:3px;
     text-transform:uppercase;
-    color:rgba(245,246,248,0.55);
-    margin-bottom:36px;
+    color:var(--cream);
+    background:var(--blue);
+    border:3px solid var(--black);
+    padding:6px 18px;
+    font-weight:900;
+    margin-bottom:38px;
+    transform:rotate(1deg);
   }
   .track-badge{
+    position:relative;
     display:inline-flex;
     align-items:center;
-    gap:10px;
-    padding:14px 28px;
-    border:1px solid rgba(255,255,255,0.15);
-    border-radius:100px;
-    background:rgba(255,255,255,0.04);
-    backdrop-filter:blur(6px);
-    margin-bottom:40px;
+    gap:12px;
+    padding:16px 30px;
+    background:var(--cream);
+    border:4px solid var(--black);
+    box-shadow:7px 7px 0 var(--black);
+    margin-bottom:44px;
+    transform:rotate(-1deg);
   }
   .track-badge .dot{
-    width:8px;height:8px;border-radius:50%;
-    background:var(--knicks-orange);
-    box-shadow:0 0 12px var(--knicks-orange);
-    animation:pulse 1.8s infinite ease-in-out;
+    width:14px;height:14px;border-radius:50%;
+    background:var(--orange);
+    border:2px solid var(--black);
+    animation:pulse 1.4s infinite ease-in-out;
   }
   @keyframes pulse{
-    0%,100%{opacity:1; transform:scale(1);}
-    50%{opacity:0.4; transform:scale(0.7);}
+    0%,100%{transform:scale(1);}
+    50%{transform:scale(0.7);}
   }
   .track-badge span{
     font-size:14px;
-    letter-spacing:1px;
-    color:var(--white);
+    letter-spacing:0.5px;
+    color:var(--black);
+    font-weight:700;
+    font-family:Arial,sans-serif;
   }
   .track-badge strong{
-    color:var(--knicks-orange-light);
-    font-weight:700;
+    color:var(--blue-dark);
+    font-weight:900;
   }
   .cta-row{
     display:flex;
     flex-wrap:wrap;
-    gap:16px;
+    gap:20px;
     justify-content:center;
   }
   .btn{
+    position:relative;
     display:inline-block;
-    padding:16px 38px;
-    font-size:14px;
-    font-weight:700;
+    padding:18px 40px;
+    font-size:15px;
+    font-weight:900;
     letter-spacing:2px;
     text-transform:uppercase;
     text-decoration:none;
-    border-radius:6px;
-    transition:transform 0.2s ease, box-shadow 0.2s ease;
+    border:4px solid var(--black);
+    box-shadow:6px 6px 0 var(--black);
+    transition:transform 0.15s ease, box-shadow 0.15s ease;
   }
   .btn-primary{
-    background:var(--knicks-orange);
-    color:var(--black);
-    box-shadow:0 8px 24px rgba(245,132,38,0.35);
+    background:var(--blue);
+    color:var(--cream);
   }
   .btn-secondary{
-    background:transparent;
-    color:var(--white);
-    border:2px solid var(--knicks-blue);
+    background:var(--cream);
+    color:var(--black);
   }
   .btn:hover{
-    transform:translateY(-3px);
-  }
-  .btn-primary:hover{
-    box-shadow:0 12px 30px rgba(245,132,38,0.5);
-  }
-  .btn-secondary:hover{
-    background:rgba(0,107,182,0.15);
+    transform:translate(3px,3px);
+    box-shadow:3px 3px 0 var(--black);
   }
   .scroll-cue{
     position:absolute;
-    bottom:28px;
+    bottom:24px;
     left:50%;
     transform:translateX(-50%);
-    font-size:11px;
+    font-size:12px;
     letter-spacing:3px;
     text-transform:uppercase;
-    color:rgba(245,246,248,0.4);
-    z-index:2;
+    color:var(--black);
+    font-weight:900;
+    z-index:3;
+    background:var(--cream);
+    border:2px solid var(--black);
+    padding:5px 14px;
   }
 
   /* ===== SECTIONS ===== */
   section{
+    position:relative;
     padding:90px 20px;
     max-width:1000px;
     margin:0 auto;
   }
   .section-label{
+    display:inline-block;
     font-size:12px;
-    letter-spacing:4px;
+    letter-spacing:3px;
     text-transform:uppercase;
-    color:var(--knicks-orange-light);
-    font-weight:700;
-    text-align:center;
-    margin-bottom:14px;
+    color:var(--cream);
+    background:var(--orange);
+    border:3px solid var(--black);
+    font-weight:900;
+    padding:6px 16px;
+    margin-bottom:18px;
   }
+  .label-wrap{text-align:center;}
   h2{
     text-align:center;
-    font-size:clamp(28px,5vw,44px);
+    font-size:clamp(30px,5.5vw,50px);
     font-weight:900;
     text-transform:uppercase;
     letter-spacing:-1px;
-    margin-bottom:44px;
+    margin-bottom:46px;
+    color:var(--black);
+    text-shadow:4px 4px 0 var(--blue);
   }
 
   /* video */
@@ -203,10 +217,10 @@
     position:relative;
     width:100%;
     padding-bottom:56.25%;
-    border-radius:14px;
     overflow:hidden;
-    border:2px solid var(--knicks-blue);
-    box-shadow:0 20px 60px rgba(0,107,182,0.25);
+    border:5px solid var(--black);
+    box-shadow:10px 10px 0 var(--orange);
+    background:var(--black);
   }
   .video-frame iframe{
     position:absolute;
@@ -215,129 +229,181 @@
   }
 
   /* streaming */
-  .stream-section{
-    text-align:center;
+  .stream-band{
+    background:var(--blue);
+    border-top:8px solid var(--black);
+    border-bottom:8px solid var(--black);
+    position:relative;
+    overflow:hidden;
   }
+  .stream-band .halftone{position:absolute; inset:0; opacity:0.1; background-image:radial-gradient(var(--cream) 1.4px, transparent 1.4px);}
+  .stream-band h2, .stream-band .section-label{position:relative; z-index:2;}
+  .stream-band h2{color:var(--cream); text-shadow:4px 4px 0 var(--orange);}
   .stream-links{
+    position:relative;
+    z-index:2;
     display:flex;
     flex-wrap:wrap;
-    gap:18px;
+    gap:20px;
     justify-content:center;
-    margin-top:8px;
   }
   .stream-card{
     display:flex;
     align-items:center;
-    gap:12px;
-    padding:18px 30px;
-    background:linear-gradient(135deg, rgba(0,107,182,0.15), rgba(245,132,38,0.1));
-    border:1px solid rgba(255,255,255,0.12);
-    border-radius:10px;
+    gap:10px;
+    padding:18px 32px;
+    background:var(--cream);
+    border:4px solid var(--black);
+    box-shadow:6px 6px 0 var(--black);
     text-decoration:none;
-    color:var(--white);
-    font-weight:700;
+    color:var(--black);
+    font-weight:900;
     letter-spacing:1px;
     text-transform:uppercase;
     font-size:14px;
-    transition:transform 0.2s ease, border-color 0.2s ease;
+    transition:transform 0.15s ease, box-shadow 0.15s ease;
   }
   .stream-card:hover{
-    transform:translateY(-4px);
-    border-color:var(--knicks-orange);
+    transform:translate(3px,3px);
+    box-shadow:3px 3px 0 var(--black);
+    background:var(--orange);
   }
 
   /* about strip */
   .about-strip{
-    background:linear-gradient(90deg, rgba(0,107,182,0.12), rgba(245,132,38,0.08));
-    border-top:1px solid rgba(255,255,255,0.08);
-    border-bottom:1px solid rgba(255,255,255,0.08);
+    background:var(--cream);
+    border-bottom:8px solid var(--black);
   }
   .about-strip p{
     max-width:720px;
     margin:0 auto;
     text-align:center;
-    font-size:18px;
+    font-size:19px;
     line-height:1.8;
-    color:rgba(245,246,248,0.85);
+    font-family:Arial,sans-serif;
+    font-weight:700;
+    color:var(--black);
   }
   .about-strip strong{
-    color:var(--knicks-orange-light);
+    color:var(--blue-dark);
+    background:var(--orange);
+    padding:0 6px;
   }
 
   /* socials / contact */
   .social-row{
     display:flex;
     justify-content:center;
-    gap:20px;
+    gap:22px;
     flex-wrap:wrap;
   }
   .social-link{
     display:flex;
     align-items:center;
     gap:10px;
-    padding:16px 32px;
-    border:1px solid var(--knicks-blue);
-    border-radius:100px;
+    padding:18px 36px;
+    background:var(--orange);
+    border:4px solid var(--black);
+    box-shadow:6px 6px 0 var(--black);
     text-decoration:none;
-    color:var(--white);
-    font-weight:700;
+    color:var(--black);
+    font-weight:900;
     letter-spacing:1px;
     text-transform:uppercase;
     font-size:14px;
+    transition:transform 0.15s ease, box-shadow 0.15s ease;
   }
   .social-link:hover{
-    background:var(--knicks-blue);
+    transform:translate(3px,3px);
+    box-shadow:3px 3px 0 var(--black);
+    background:var(--blue);
+    color:var(--cream);
   }
   .contact-box{
     text-align:center;
-    margin-top:50px;
+    margin-top:54px;
     padding-top:40px;
-    border-top:1px solid rgba(255,255,255,0.1);
+    border-top:4px dashed var(--black);
   }
   .contact-box a{
-    color:var(--knicks-orange-light);
+    color:var(--cream);
+    background:var(--black);
     text-decoration:none;
-    font-weight:700;
+    font-weight:900;
+    padding:10px 22px;
+    display:inline-block;
+    letter-spacing:1px;
   }
+  .contact-box a:hover{background:var(--blue);}
   .label{
     font-size:12px;
     letter-spacing:3px;
     text-transform:uppercase;
-    color:rgba(245,246,248,0.45);
-    margin-bottom:10px;
+    color:var(--black);
+    font-weight:900;
+    margin-bottom:14px;
+    font-family:Arial,sans-serif;
   }
 
   footer{
     text-align:center;
-    padding:40px 20px 50px;
+    padding:34px 20px;
     font-size:12px;
     letter-spacing:2px;
     text-transform:uppercase;
-    color:rgba(245,246,248,0.35);
+    color:var(--cream);
+    background:var(--black);
+    font-weight:900;
+    font-family:Arial,sans-serif;
   }
   footer .rec{
-    color:var(--knicks-orange-light);
-    font-weight:700;
+    color:var(--orange);
   }
 
   @media (max-width:600px){
-    .btn{padding:14px 26px; font-size:12px;}
-    section{padding:60px 18px;}
+    .btn{padding:15px 28px; font-size:12px;}
+    section{padding:64px 18px;}
+    .artist-name{text-shadow:4px 4px 0 var(--black), 4px 4px 0 var(--blue);}
   }
 </style>
 </head>
 <body>
 
   <section class="hero">
-    <div class="court-arc"></div>
-    <div class="court-arc inner"></div>
+    <div class="halftone"></div>
+    <svg class="court-svg" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice">
+      <!-- center circle -->
+      <circle cx="500" cy="500" r="160" fill="none" stroke="#0e0e0e" stroke-width="6" opacity="0.5"/>
+      <circle cx="500" cy="500" r="160" fill="none" stroke="#006BB6" stroke-width="3" opacity="0.6"/>
+      <!-- half court line -->
+      <line x1="0" y1="500" x2="1000" y2="500" stroke="#0e0e0e" stroke-width="6" opacity="0.4"/>
+      <!-- top key / free throw lane -->
+      <rect x="380" y="-50" width="240" height="330" fill="none" stroke="#0e0e0e" stroke-width="6" opacity="0.4"/>
+      <circle cx="500" cy="280" r="90" fill="none" stroke="#0e0e0e" stroke-width="6" opacity="0.4"/>
+      <!-- top three point arc -->
+      <path d="M 150 -50 L 150 220 A 350 350 0 0 0 850 220 L 850 -50" fill="none" stroke="#0e0e0e" stroke-width="6" opacity="0.35"/>
+      <!-- bottom key -->
+      <rect x="380" y="720" width="240" height="330" fill="none" stroke="#0e0e0e" stroke-width="6" opacity="0.4"/>
+      <circle cx="500" cy="720" r="90" fill="none" stroke="#0e0e0e" stroke-width="6" opacity="0.4"/>
+      <!-- bottom three point arc -->
+      <path d="M 150 1050 L 150 780 A 350 350 0 0 1 850 780 L 850 1050" fill="none" stroke="#0e0e0e" stroke-width="6" opacity="0.35"/>
+      <!-- basketball -->
+      <g transform="translate(150,150)" opacity="0.55">
+        <circle cx="0" cy="0" r="55" fill="none" stroke="#0e0e0e" stroke-width="5"/>
+        <path d="M -55 0 L 55 0 M 0 -55 L 0 55 M -40 -40 Q 0 0 -40 40 M 40 -40 Q 0 0 40 40" fill="none" stroke="#0e0e0e" stroke-width="4"/>
+      </g>
+      <g transform="translate(850,850)" opacity="0.55">
+        <circle cx="0" cy="0" r="55" fill="none" stroke="#0e0e0e" stroke-width="5"/>
+        <path d="M -55 0 L 55 0 M 0 -55 L 0 55 M -40 -40 Q 0 0 -40 40 M 40 -40 Q 0 0 40 40" fill="none" stroke="#0e0e0e" stroke-width="4"/>
+      </g>
+    </svg>
     <div class="hero-content">
       <div class="kicker">Rowdy Hop Records Presents</div>
       <div class="artist-name">Mark A.M.</div>
-      <div class="artist-sub">Contemporary Alt&nbsp;·&nbsp;Pop&nbsp;·&nbsp;R&amp;B</div>
+      <div><span class="artist-sub">Alt · Pop · R&amp;B</span></div>
       <div class="track-badge">
         <span class="dot"></span>
-        <span>Out Now &nbsp;—&nbsp; <strong>"All Roads End Here"</strong> feat. Rowdy Hop</span>
+        <span>Out Now — <strong>"All Roads End Here"</strong> feat. Rowdy Hop</span>
       </div>
       <div class="cta-row">
         <a class="btn btn-primary" href="https://distrokid.com/hyperfollow/markam1/all-roads-end-here-feat-rowdy-hop?ref=release" target="_blank" rel="noopener">Stream Now</a>
@@ -351,30 +417,33 @@
     <section>
       <p>
         <strong>"All Roads End Here"</strong> is the new single from Mark A.M., featuring Rowdy Hop —
-        a contemporary alt-pop/R&amp;B track from <strong>Rowdy Hop Records</strong>. Stream it everywhere now.
+        an alt-pop/R&amp;B track from Rowdy Hop Records. Stream it everywhere now.
       </p>
     </section>
   </div>
 
   <section id="video">
-    <div class="section-label">Watch</div>
+    <div class="label-wrap"><span class="section-label">Watch</span></div>
     <h2>Official Video</h2>
     <div class="video-frame">
       <iframe src="https://www.youtube.com/embed/638fr7f0Z2g" title="Mark A.M. — All Roads End Here" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
   </section>
 
-  <section class="stream-section">
-    <div class="section-label">Listen</div>
-    <h2>Stream "All Roads End Here"</h2>
-    <div class="stream-links">
-      <a class="stream-card" href="https://distrokid.com/hyperfollow/markam1/all-roads-end-here-feat-rowdy-hop?ref=release" target="_blank" rel="noopener">▶ All Platforms</a>
-      <a class="stream-card" href="https://open.spotify.com/artist/3qz9dq3dluAz2YcLkjDKMO?si=pTCFsA71Q1OOUMVexeSYBA" target="_blank" rel="noopener">♫ Spotify</a>
-    </div>
-  </section>
+  <div class="stream-band">
+    <div class="halftone"></div>
+    <section>
+      <div class="label-wrap"><span class="section-label" style="background:var(--cream); color:var(--black);">Listen</span></div>
+      <h2>Stream "All Roads End Here"</h2>
+      <div class="stream-links">
+        <a class="stream-card" href="https://distrokid.com/hyperfollow/markam1/all-roads-end-here-feat-rowdy-hop?ref=release" target="_blank" rel="noopener">▶ All Platforms</a>
+        <a class="stream-card" href="https://open.spotify.com/artist/3qz9dq3dluAz2YcLkjDKMO?si=pTCFsA71Q1OOUMVexeSYBA" target="_blank" rel="noopener">♫ Spotify</a>
+      </div>
+    </section>
+  </div>
 
   <section>
-    <div class="section-label">Connect</div>
+    <div class="label-wrap"><span class="section-label">Connect</span></div>
     <h2>Follow Mark A.M.</h2>
     <div class="social-row">
       <a class="social-link" href="https://www.instagram.com/mark_am_music/" target="_blank" rel="noopener">Instagram</a>
